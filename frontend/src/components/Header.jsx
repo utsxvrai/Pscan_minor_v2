@@ -24,21 +24,22 @@ const Header = () => {
         <Link to="/about" className="text-sm font-medium hover:text-gray-400 transition">
           About Us
         </Link>
-        {isLoggedIn ? (
+        {/* {isLoggedIn ? (
           <Link
             to="/profile"
             className="mx-2 px-4 py-2 rounded-md text-sm font-medium bg-blue-600 hover:bg-gray-700 transition"
           >
             Profile
           </Link>
-        ) : (
+        ) : ( */}
           <Link
             to="/sign-in"
             className="mx-2 px-4 py-2 rounded-md text-sm font-medium bg-blue-600 hover:bg-gray-700 transition"
           >
             Sign In
           </Link>
-        )}
+        {/* ) */}
+        {/* } */}
       </div>
     </nav>
   );

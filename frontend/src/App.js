@@ -9,10 +9,10 @@ import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import { useAuth } from './context/AuthContext';
 
-const PrivateRoute = ({ children }) => {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? children : <Navigate to="/sign-in" />;
-};
+// const PrivateRoute = ({ children }) => {
+//   const { isAuthenticated } = useAuth();
+//   return isAuthenticated ? children : <Navigate to="/sign-in" />;
+// };
 
 const App = () => {
   return (
@@ -24,11 +24,9 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/sign-in" element={<Signin />} />
             <Route path="/sign-up" element={<Signup />} />
-            <Route path="/profile" element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
-            } />
+            <Route path="/profile" element={<Profile />} />
+
+          
           </Routes>
         </main>
         <Footer />

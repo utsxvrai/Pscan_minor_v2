@@ -1,51 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import { Clock, Image, MessageSquare } from 'lucide-react';
-import axios from 'axios';
 
-const ProfilePage = () => {
+const Profile = () => {
   const { logout, userName } = useAuth();
-  const [scanHistory, setScanHistory] = useState([]);
-  const [chatHistory, setChatHistory] = useState([]);
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        navigate('/sign-in');
-        return;
-      }
+  // Manually added scan history for testing
+  const scanHistory = [
+    {
+      imageUrl: 'https://via.placeholder.com/150', // Replace with actual image URL
+      prediction: 'Pneumonia Detected',
+      date: '2024-11-17',
+    },
+    {
+      imageUrl: 'https://via.placeholder.com/150',
+      prediction: 'Normal',
+      date: '2024-11-16',
+    },
+  ];
 
-      try {
-        // Fetch scan history
-        const scanResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/scans`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setScanHistory(scanResponse.data.scans || []);
-
-        // Fetch chat history
-        const chatResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/chats`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setChatHistory(chatResponse.data.chats || []);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData();
-  }, [navigate]);
+  // Manually added chat history for testing
+  const chatHistory = [
+    {
+      message: 'What are the symptoms of pneumonia?',
+      timestamp: '2024-11-15T14:30:00Z',
+    },
+    {
+      message: 'How do I recover quickly?',
+      timestamp: '2024-11-16T10:00:00Z',
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
       <div className="max-w-6xl mx-auto">
         {/* Profile Header */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 mb-8">
-          <h1 className="text-3xl font-bold mb-2">Welcome back, {userName}</h1>
+          <h1 className="text-3xl font-bold mb-2">Welcome back, {userName || 'User'}</h1>
           <p className="text-blue-100">View your scan history and chat interactions</p>
-          <button 
+          <button
             onClick={() => logout()}
             className="mt-4 bg-red-500/20 hover:bg-red-500/30 px-4 py-2 rounded-lg transition-colors"
           >
@@ -63,8 +56,8 @@ const ProfilePage = () => {
             <div className="space-y-4">
               {scanHistory.map((scan, index) => (
                 <div key={index} className="bg-white/5 rounded-lg p-4">
-                  <img 
-                    src={scan.imageUrl} 
+                  <img
+                    src={scan.imageUrl}
                     alt={`Scan ${index + 1}`}
                     className="w-full h-48 object-cover rounded-lg mb-2"
                   />
@@ -103,4 +96,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default Profile;
