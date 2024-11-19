@@ -1,6 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const RecoveryExercises = ({ onScrollToVideos }) => {
+const RecoveryExercises = () => {
+  const navigate = useNavigate();
+
+  const handleViewExercises = () => {
+    navigate('/exercises'); // Navigate to the "Exercises" page
+  };
+
   return (
     <div className="bg-purple-400/20 rounded-3xl p-6 backdrop-blur-sm">
       <div className="flex items-start gap-4">
@@ -27,9 +34,9 @@ const RecoveryExercises = ({ onScrollToVideos }) => {
         </div>
         <div>
           <h3 className="font-semibold mb-2 text-lg">Recovery Exercises</h3>
-          <p className="text-sm text-gray-300 mb-4">Recommended exercises for recovery</p>
+          <p className="text-sm text-gray-300 mb-4">Recommended exercises for recovery which will help you to recover you</p>
           <button
-            onClick={onScrollToVideos} // Call the scroll-to-video function
+            onClick={handleViewExercises} // Navigate to the Exercises page
             className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg transition-colors"
           >
             View Exercises

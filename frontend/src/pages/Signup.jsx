@@ -3,8 +3,8 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
-import { signup } from '../api';
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', rememberMe: false });
@@ -21,8 +21,12 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await signup(formData.name, formData.email, formData.password);
-
+      const response = await axios.post(`http://localhost:5000/api/v1/signup`, {
+        name : formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
+      console.log(response);
       if (response.data.success) {
         toast.success(response.data.message);
         navigate('/sign-in');

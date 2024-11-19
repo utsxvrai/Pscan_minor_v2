@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { toast, ToastContainer } from 'react-toastify';
-import { signin } from '../api';
+import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 
 const LoginPage = () => {
@@ -25,12 +25,25 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const response = await signin(formData.email, formData.password);
+      // Send POST request to the backend for sign-in
+      const response = await axios.post(`http://localhost:5000/api/v1/signin`, {
+        email: formData.email,
+        password: formData.password,
+      });
+      console.log(response);
 
+      // Handle successful login
       if (response.data.success) {
-        login(response.data.data.token, response.data.data.name);
+
+        const  token = response.data.data;
+
+      // Save token and user name in localStorage 
+        localStorage.setItem('authToken', token);
+
+      login(token); // Save token and user details in the context (AuthContext)
         toast.success(response.data.message);
-        navigate('/');
+        toast.success(response.data.message);
+        navigate('/'); // Redirect to the home page
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -39,8 +52,8 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen  bg-gray-900 flex items-center justify-center p-4">
-    <ToastContainer />
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
+      <ToastContainer />
       <div className="w-full max-w-6xl grid md:grid-cols-2 gap-0 bg-black rounded-3xl shadow-2xl overflow-hidden">
         {/* Login Form Section */}
         <div className="flex flex-col p-12">
@@ -136,4 +149,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage; 
+export default LoginPage;

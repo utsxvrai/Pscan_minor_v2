@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
+import Exercises from './pages/Exercises'
 import { useAuth } from './context/AuthContext';
 
 // const PrivateRoute = ({ children }) => {
@@ -25,11 +26,12 @@ const App = () => {
             <Route path="/sign-in" element={<Signin />} />
             <Route path="/sign-up" element={<Signup />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/exercises" element={<Exercises />} />
 
           
           </Routes>
         </main>
-        <Footer />
+        
       </div>
     </Router>
   );
